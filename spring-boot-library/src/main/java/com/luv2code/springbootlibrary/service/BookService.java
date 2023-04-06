@@ -7,6 +7,7 @@ import com.luv2code.springbootlibrary.entity.Book;
 import com.luv2code.springbootlibrary.entity.Checkout;
 import com.luv2code.springbootlibrary.entity.History;
 import com.luv2code.springbootlibrary.responsemodels.ShelfCurrentLoansResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class BookService {
 
     private HistoryRepository historyRepository;
 
+    @Autowired
     public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository,
                        HistoryRepository historyRepository) {
         this.bookRepository = bookRepository;
@@ -90,6 +92,7 @@ public class BookService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Book book : books) {
+            //get the specific checkout from the book I am at on the for loop.
             Optional<Checkout> checkout = checkoutList.stream()
                     .filter(x -> x.getBookId() == book.getId()).findFirst();
 
